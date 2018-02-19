@@ -9,8 +9,8 @@ values pushed into the `sink` Observer are emitted by the `source$` Observable.
 the `source$` Observable is hot and accepts any number of subscribers.
 
 # Credits
-* implementation based on createEventHandler from [`recompose`] (https://github.com/acdlite/recompose).
-* unit tests based on the [Subject test suite](minimal Subject implementation, independent of reactive framework) of [`RxJS`](http://reactivex.io/rxjs/).
+* implementation based on createEventHandler from [`recompose`](https://github.com/acdlite/recompose).
+* unit tests based on the [Subject test suite](https://github.com/ReactiveX/rxjs/spec/Subject-spec.ts) of [`RxJS`](http://reactivex.io/rxjs/).
 
 # API
 this module exposes a Subject factory:
