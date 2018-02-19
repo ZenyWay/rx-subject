@@ -1,13 +1,14 @@
 {
   "name": "rx-subject",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "minimal Subject implementation, independent of reactive framework",
-  "main": "dist/index.js",
+  "main": "dist/index.min.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "predist": "mkdirp dist && rimraf dist/*",
     "dist": "tsc -p src --outDir dist",
     "postdist": "npm run uglify",
-    "prepublish": "npm run dist",
+    "prepublish": "npm run test",
     "pretest": "npm run dist",
     "test": "jasmine",
     "test:web:serve": "http-server -c-1 -o -p 6510 spec/web",

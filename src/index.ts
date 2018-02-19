@@ -42,16 +42,16 @@ export interface Subject<T> {
 
 export interface Observer<T> {
   next (val: T): void
-  error (error: any): void
-  complete (): void
+  error? (error?: any): void
+  complete? (): void
 }
 
 export interface Observable<T> {
   subscribe(observer: Observer<T>): Subscription
   subscribe (
     next: (val: T) => void,
-    error: (error: any) => void,
-    complete: () => void
+    error?: (error?: any) => void,
+    complete?: () => void
   ): Subscription
 }
 
@@ -79,16 +79,15 @@ export default function createSubject <T>(): Subject<T> {
   function subscribe (
     this: void,
     observerOrNext: Observer<T>|((val: T) => void),
-    error?: (error: any) => void,
+    error?: (error?: any) => void,
     complete?: () => void
   ) {
     let done = false
-    const observer = typeof observerOrNext !== 'function'
-    ? observerOrNext
-    : { next: observerOrNext, error, complete }
+    const observer = toObserver(observerOrNext, error, complete)
 
     if (terminated) {
-      observe(terminated.key, terminated.error)
+      const { key, error } = terminated
+      observe(key, error)
       return { unsubscribe() {} }
     }
 
@@ -109,4 +108,20 @@ export default function createSubject <T>(): Subject<T> {
 interface Emitter<T> {
   emit (name: string, ...args: any[]): void
   listen (handler: (name: string, ...args: any[]) => void): () => void
+}
+
+function toObserver <T>(
+    this: void,
+    observerOrNext: Observer<T>|((val: T) => void),
+    error?: (error?: any) => void,
+    complete?: () => void
+): Observer<T> {
+  if (typeof observerOrNext === 'function') {
+    return { next: observerOrNext, error, complete }
+  }
+  return {
+    next (val: T) { observerOrNext.next(val) },
+    error (err?: any) { observerOrNext.error(err) },
+    complete () { observerOrNext.complete() }
+  }
 }

@@ -30,6 +30,7 @@ const createSubject = require('../').default
 const Observable = require('rxjs/Observable').Observable
 require('rxjs/add/observable/of')
 require('rxjs/add/operator/delay')
+const Subscriber = require('rxjs/Subscriber').Subscriber
 
 describe('Subject', function () {
   describe('.source$', function () {
@@ -272,6 +273,30 @@ describe('Subject', function () {
       expect(results1).toEqual([])
       expect(results2).toEqual(['C'])
       expect(results3).toEqual(['C'])
+    })
+    it('should support subscription from an RxJS Subscriber', function (done) {
+      const subject = createSubject()
+      const expected = ['foo', 'bar']
+      const err = new Error('boom')
+
+      const sub = subject.source$.subscribe(Subscriber.create(
+        function (x) {
+          expect(x).toBe(expected.shift())
+        },
+        function (x) {
+          expect(x).toBe(err)
+          sub.unsubscribe()
+          done()
+        },
+        function (x) {
+          sub.unsubscribe()
+          done(new Error('should not be called'))
+        }
+      ))
+
+      subject.sink.next('foo')
+      subject.sink.next('bar')
+      subject.sink.error(err)
     })
   })
 
