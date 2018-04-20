@@ -37,7 +37,7 @@ import $$observable from 'symbol-observable'
 
 export interface Subject<T> {
   sink: Observer<T>
-  source$: Observable<T>
+  source$: Subscribable<T>
 }
 
 export interface Observer<T> {
@@ -46,7 +46,7 @@ export interface Observer<T> {
   complete? (): void
 }
 
-export interface Observable<T> {
+export interface Subscribable<T> {
   subscribe(observer: Observer<T>): Subscription
   subscribe (
     next: (val: T) => void,
@@ -71,7 +71,7 @@ export default function createSubject <T>(): Subject<T> {
 
   const source$ = {
     subscribe,
-    [$$observable](): Observable<T> { return this }
+    [$$observable](): Subscribable<T> { return this }
   }
 
   return { sink, source$ }

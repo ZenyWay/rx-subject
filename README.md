@@ -43,7 +43,7 @@ interface Subscription {
 ```
 
 for a detailed specification of this API,
-run the [unit tests](https://cdn.rawgit.com/ZenyWay/rx-subject/v1.1.0/spec/web/index.html)
+run the [unit tests](https://cdn.rawgit.com/ZenyWay/rx-subject/v2.0.0/spec/web/index.html)
 in your browser.
 these unit tests are a subset of the [RxJS Subject test suite](https://github.com/ReactiveX/rxjs/spec/Subject-spec.ts).
 
