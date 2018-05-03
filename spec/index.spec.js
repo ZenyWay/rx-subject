@@ -27,10 +27,10 @@
  * Limitations under the License.
  */
 const createSubject = require('../').default
-const Observable = require('rxjs/Observable').Observable
-require('rxjs/add/observable/of')
-require('rxjs/add/operator/delay')
-const Subscriber = require('rxjs/Subscriber').Subscriber
+const Observable = require('rxjs').Observable
+const observable = require('rxjs').of
+const delay = require('rxjs/operators').delay
+const Subscriber = require('rxjs').Subscriber
 
 describe('Subject', function () {
   describe('.source$', function () {
@@ -302,7 +302,7 @@ describe('Subject', function () {
 
   describe('.sink', function () {
     it('should be an Observer which can be given to Observable.subscribe', function (done) {
-      const source = Observable.of(1, 2, 3, 4, 5)
+      const source = observable(1, 2, 3, 4, 5)
       const subject = createSubject()
       const expected = [1, 2, 3, 4, 5]
 
@@ -324,7 +324,7 @@ describe('Subject', function () {
     })
 
     it('should be usable as an Observer of a finite delayed Observable', function (done) {
-      const source = Observable.of(1, 2, 3).delay(50)
+      const source = observable(1, 2, 3).pipe(delay(50))
       const subject = createSubject()
 
       const expected = [1, 2, 3]

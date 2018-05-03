@@ -3,10 +3,10 @@
 
 minimal Subject implementation, independent of reactive framework.
 
-a Subject exposes a `sink` Observer, and a `source$` Observable.
-values pushed into the `sink` Observer are emitted by the `source$` Observable.
+a Subject exposes a `sink` Observer, and a `source$` Subscribable.
+values pushed into the `sink` Observer are emitted by the `source$` Subscribable.
 
-the `source$` Observable is hot and accepts any number of subscribers.
+the `source$` Subscribable is hot and accepts any number of subscribers.
 
 # Credits
 * implementation based on createEventHandler from [`recompose`](https://github.com/acdlite/recompose).
@@ -15,30 +15,30 @@ the `source$` Observable is hot and accepts any number of subscribers.
 # API
 this module exposes a Subject factory:
 ```ts
-declare function createSubject <T>(): Subject<T>
+export default function createSubject<T>(): Subject<T>
 
-interface Subject<T> {
+export interface Subject<T> {
   sink: Observer<T>
-  source$: Observable<T>
+  source$: Subscribable<T>
 }
 
-interface Observer<T> {
-  next (val: T): void
-  error (error: any): void
-  complete (): void
+export interface Observer<T> {
+  next(val: T): void
+  error?(error?: any): void
+  complete?(): void
 }
 
-interface Observable<T> {
-  subscribe(observer: Observer<T>): Subscription
-  subscribe (
+export interface Subscribable<T> {
+  subscribe(observer: Observer<T>): Subscription;
+  subscribe(
     next: (val: T) => void,
-    error: (error: any) => void,
-    complete: () => void
+    error?: (error?: any) => void,
+    complete?: () => void
   ): Subscription
 }
 
-interface Subscription {
-  unsubscribe (): void
+export interface Subscription {
+  unsubscribe(): void
 }
 ```
 
