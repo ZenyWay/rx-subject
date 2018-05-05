@@ -27,13 +27,18 @@
  * Limitations under the License.
  */
 const createSubject = require('../').default
-const Observable = require('rxjs').Observable
-const observable = require('rxjs').of
+const observableOf = require('rxjs').of
 const delay = require('rxjs/operators').delay
 const Subscriber = require('rxjs').Subscriber
 
 describe('Subject', function () {
   describe('.source$', function () {
+    it('should expose a compliant `Symbol.observable` property', function () {
+      const subject = createSubject()
+      expect(subject.source$[Symbol.observable]).toEqual(jasmine.any(Function))
+      expect(subject.source$[Symbol.observable]()).toBe(subject.source$)
+    })
+
     it('should pump values right on through itself', function (done) {
       const subject = createSubject()
       const expected = ['foo', 'bar']
@@ -302,7 +307,7 @@ describe('Subject', function () {
 
   describe('.sink', function () {
     it('should be an Observer which can be given to Observable.subscribe', function (done) {
-      const source = observable(1, 2, 3, 4, 5)
+      const source = observableOf(1, 2, 3, 4, 5)
       const subject = createSubject()
       const expected = [1, 2, 3, 4, 5]
 
@@ -324,7 +329,7 @@ describe('Subject', function () {
     })
 
     it('should be usable as an Observer of a finite delayed Observable', function (done) {
-      const source = observable(1, 2, 3).pipe(delay(50))
+      const source = observableOf(1, 2, 3).pipe(delay(50))
       const subject = createSubject()
 
       const expected = [1, 2, 3]

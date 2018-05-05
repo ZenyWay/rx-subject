@@ -5,11 +5,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
-      "es2015",
-      "dom"
+      "es2015"
     ],
     "types": [
-			"inferno"
+      "symbol-observable"
     ],
 		"jsx": "react",
 		"jsxFactory": "createElement",

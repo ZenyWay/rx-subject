@@ -1,18 +1,19 @@
 {
   "name": "rx-subject",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "minimal Subject implementation, independent of reactive framework",
   "main": "dist/index.min.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "predist": "mkdirp dist && rimraf dist/*",
     "dist": "tsc -p src --outDir dist",
+    "symbol-observable-polyfill": "browserify -r symbol-observable --standalone symbol-observable -g uglifyify -p bundle-collapser/plugin -p [ common-shakeify -v ] | uglifyjs -c -m > spec/web/symbol-observable.js",
     "postdist": "npm run uglify",
     "prepublish": "npm run test",
     "pretest": "npm run dist",
     "test": "jasmine",
     "test:web:serve": "http-server -c-1 -o -p 6510 spec/web",
-    "pretest:web": "rimraf spec/web/*.js && npm run dist",
+    "pretest:web": "rimraf spec/web/*.js && npm run pretest && npm run symbol-observable-polyfill",
     "test:web": "browserify spec/*.spec.js -g uglifyify -p bundle-collapser/plugin -p [ common-shakeify -v ] | uglifyjs -c -m > spec/web/index.spec.js && npm run test:web:serve",
     "uglify": "uglifyjs dist/index.js -c -m -o dist/index.min.js"
   },
@@ -47,13 +48,13 @@
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2",
     "rxjs": "^6.0.0",
+    "symbol-observable": "^1.2.0",
     "tslint": "^5.9.1",
     "typescript": "^2.8.3",
     "uglify-es": "^3.3.9",
     "uglifyify": "^5.0.0"
   },
   "dependencies": {
-    "change-emitter": "^0.1.6",
-    "symbol-observable": "^1.2.0"
+    "change-emitter": "^0.1.6"
   }
 }

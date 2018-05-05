@@ -43,9 +43,17 @@ export interface Subscription {
 ```
 
 for a detailed specification of this API,
-run the [unit tests](https://cdn.rawgit.com/ZenyWay/rx-subject/v2.0.0/spec/web/index.html)
+run the [unit tests](https://cdn.rawgit.com/ZenyWay/rx-subject/v3.0.0/spec/web/index.html)
 in your browser.
 these unit tests are a subset of the [RxJS Subject test suite](https://github.com/ReactiveX/rxjs/spec/Subject-spec.ts).
+
+# `Symbol.observable`
+This module expects `Symbol.observable` to be defined in the global scope.
+Use a polyfill such as [`symbol-observable`](https://npmjs.com/package/symbol-observable/)
+and if necessary a `Symbol` polyfill.
+Check the [`symbol-observable-polyfill` script](./package.json#L10)
+for an example of how to generate the standalone polyfill,
+which can than be [loaded from a script tag](./spec/web/index.html#L26).
 
 # TypeScript
 although this library is written in [TypeScript](https://www.typescriptlang.org),

@@ -33,7 +33,6 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 import { createChangeEmitter } from 'change-emitter'
-import $$observable from 'symbol-observable'
 
 export interface Subject<T> {
   sink: Observer<T>
@@ -71,7 +70,7 @@ export default function createSubject <T>(): Subject<T> {
 
   const source$ = {
     subscribe,
-    [$$observable](): Subscribable<T> { return this }
+    [Symbol.observable](): Subscribable<T> { return this }
   }
 
   return { sink, source$ }
