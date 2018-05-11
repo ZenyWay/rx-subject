@@ -303,6 +303,43 @@ describe('Subject', function () {
       subject.sink.next('bar')
       subject.sink.error(err)
     })
+    it('should pump values to multiple subscribers one after the other, ' +
+    'in order of subscriptions', function (done) {
+      const subject = createSubject()
+      const subs = []
+
+      let seq = 0
+      let i = 0
+      let j = 0
+      let k = 0
+
+      subs.push(subject.source$.subscribe(function (x) {
+        expect(seq++).toBe(3 * i++)
+      }))
+
+      subs.push(subject.source$.subscribe(function (x) {
+        expect(seq++).toBe(1 + 3 * j++)
+      }))
+
+      subs.push(subject.source$.subscribe(
+        function (x) {
+          expect(seq++).toBe(2 + 3 * k++)
+        },
+        function (x) {
+          subs.forEach(sub => sub.unsubscribe())
+          done(new Error('should not be called'))
+        },
+        function (x) {
+          subs.forEach(sub => sub.unsubscribe())
+          done()
+        }
+      ))
+
+      subject.sink.next('foo')
+      subject.sink.next('bar')
+      subject.sink.next('baz')
+      subject.sink.complete()
+    })
   })
 
   describe('.sink', function () {
