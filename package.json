@@ -1,6 +1,6 @@
 {
   "name": "rx-subject",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "minimal Subject implementation, independent of reactive framework",
   "main": "dist/index.min.js",
   "typings": "dist/index.d.ts",
@@ -14,8 +14,8 @@
     "test": "jasmine",
     "test:web:serve": "http-server -c-1 -o -p 6510 spec/web",
     "pretest:web": "rimraf spec/web/*.js && npm run pretest && npm run symbol-observable-polyfill",
-    "test:web": "browserify spec/*.spec.js -g uglifyify -p bundle-collapser/plugin -p [ common-shakeify -v ] | uglifyjs -c -m > spec/web/index.spec.js && npm run test:web:serve",
-    "uglify": "uglifyjs dist/index.js -c -m -o dist/index.min.js"
+    "test:web": "browserify spec/*.spec.js -g uglifyify -p bundle-collapser/plugin -p [ common-shakeify -v ] | uglifyjs -c -m toplevel -o spec/web/index.spec.js && npm run test:web:serve",
+    "uglify": "uglifyjs dist/index.js -c -m toplevel -o dist/index.min.js"
   },
   "keywords": [
     "subject",
@@ -47,7 +47,7 @@
     "jasmine": "^3.1.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2",
-    "rxjs": "^6.0.0",
+    "rxjs": "^6.1.0",
     "symbol-observable": "^1.2.0",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3",
