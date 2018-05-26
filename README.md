@@ -1,16 +1,17 @@
 # rx-subject
 [![NPM](https://nodei.co/npm/rx-subject.png?compact=true)](https://nodei.co/npm/rx-subject/)
 
-minimal Subject implementation, independent of reactive framework.
+minimal Subject implementation (0.4k bytes gzip, no dependencies),
+independent of reactive framework.
 
 a Subject exposes a `sink` Observer, and a `source$` Subscribable.
 values pushed into the `sink` Observer are emitted by the `source$` Subscribable.
 
 the `source$` Subscribable is hot and accepts any number of subscribers.
+all subscriptions are cleared after `source$` emits `error` or `complete`.
 
 # Credits
-* implementation based on createEventHandler from [`recompose`](https://github.com/acdlite/recompose).
-* unit tests based on the [Subject test suite](https://github.com/ReactiveX/rxjs/spec/Subject-spec.ts) of [`RxJS`](http://reactivex.io/rxjs/).
+unit tests based on the [Subject test suite](https://github.com/ReactiveX/rxjs/spec/Subject-spec.ts) of [`RxJS`](http://reactivex.io/rxjs/).
 
 # API
 this module exposes a Subject factory:
@@ -43,7 +44,7 @@ export interface Subscription {
 ```
 
 for a detailed specification of this API,
-run the [unit tests](https://cdn.rawgit.com/ZenyWay/rx-subject/v3.0.2/spec/web/index.html)
+run the [unit tests](https://cdn.rawgit.com/ZenyWay/rx-subject/v3.1.0/spec/web/index.html)
 in your browser.
 these unit tests are a subset of the [RxJS Subject test suite](https://github.com/ReactiveX/rxjs/spec/Subject-spec.ts).
 

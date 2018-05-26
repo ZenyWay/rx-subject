@@ -1,7 +1,7 @@
 {
   "name": "rx-subject",
-  "version": "3.0.2",
-  "description": "minimal Subject implementation, independent of reactive framework",
+  "version": "3.1.0",
+  "description": "minimal Subject implementation (0.4k bytes), independent of reactive framework",
   "main": "dist/index.min.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -54,7 +54,5 @@
     "uglify-es": "^3.3.9",
     "uglifyify": "^5.0.0"
   },
-  "dependencies": {
-    "change-emitter": "^0.1.6"
-  }
+  "dependencies": {}
 }
